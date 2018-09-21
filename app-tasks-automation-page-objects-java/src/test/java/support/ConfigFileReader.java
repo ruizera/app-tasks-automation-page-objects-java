@@ -9,7 +9,7 @@ import java.util.Properties;
 public class ConfigFileReader {
 
 	private Properties properties;
-	private final String propertyFilePath = "configs//Configuration.properties";
+	private final String propertyFilePath = "src/test/java/config/properties.properties";
 
 	public ConfigFileReader() {
 		BufferedReader reader;
@@ -24,7 +24,7 @@ public class ConfigFileReader {
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Configuration.properties not found at " + propertyFilePath);
+			throw new RuntimeException("Não foi possível carregar as propriedades no local " + propertyFilePath);
 		}
 	}
 
@@ -33,20 +33,16 @@ public class ConfigFileReader {
 		if (driverPath != null)
 			return driverPath;
 		else
-			throw new RuntimeException(
-					"Driver Path not specified in the Configuration.properties file for the Key:driverPath");
+			throw new RuntimeException("Driver Path não especificado");
 	}
 
 	public long getImplicitlyWait() {
 		String implicitlyWait = properties.getProperty("implicitlyWait");
-		if (implicitlyWait != null) {
-			try {
-				return Long.parseLong(implicitlyWait);
-			} catch (NumberFormatException e) {
-				throw new RuntimeException("Not able to parse value : " + implicitlyWait + " in to Long");
-			}
+		if (!implicitlyWait.equals("")) {
+			return Long.parseLong(implicitlyWait);
+		} else {
+			return 30;
 		}
-		return 30;
 	}
 
 	public String getApplicationUrl() {
@@ -54,8 +50,7 @@ public class ConfigFileReader {
 		if (url != null)
 			return url;
 		else
-			throw new RuntimeException(
-					"Application Url not specified in the Configuration.properties file for the Key:url");
+			throw new RuntimeException("Url não especificada");
 	}
 
 	public DriverType getBrowser() {
@@ -67,19 +62,7 @@ public class ConfigFileReader {
 		else if (browserName.equals("iexplorer"))
 			return DriverType.IE;
 		else
-			throw new RuntimeException(
-					"Browser Name Key value in Configuration.properties is not matched : " + browserName);
-	}
-
-	public EnvironmentType getEnvironment() {
-		String environmentName = properties.getProperty("environment");
-		if (environmentName == null || environmentName.equalsIgnoreCase("local"))
-			return EnvironmentType.LOCAL;
-		else if (environmentName.equals("remote"))
-			return EnvironmentType.REMOTE;
-		else
-			throw new RuntimeException(
-					"Environment Type Key value in Configuration.properties is not matched : " + environmentName);
+			throw new RuntimeException("Browser: " + browserName + " não implementado");
 	}
 
 	public Boolean getBrowserWindowSize() {

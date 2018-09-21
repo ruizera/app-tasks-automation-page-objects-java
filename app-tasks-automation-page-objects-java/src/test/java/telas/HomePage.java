@@ -1,17 +1,68 @@
 package telas;
 
-import org.openqa.selenium.WebDriver;
+import java.util.ArrayList;
+import java.util.List;
 
-public class HomePage{
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class HomePage {
 
 	private WebDriver driver;
-
+	private List<String> tarefas = new ArrayList<String>();
+	private List<String> tarefasConcluidas = new ArrayList<String>();
+	
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
 	}
 
-	public void adicionarTarefa(int arg1) {
-		
+	public void adicionarTarefa(String tarefa, int arg1) {
+		String nomeTarefa = "";
+		for (int i = 1; i <= arg1; i++) {
+			nomeTarefa = tarefa.replace("n", String.valueOf(i));
+			driver.findElement(By.xpath("//*[@type='text']")).sendKeys(nomeTarefa);
+			driver.findElement(By.id("add")).click();
+			tarefas.add(nomeTarefa);
+		}
 	}
-	
+
+	public boolean validarTarefas() {
+
+		if (!(driver.findElements(By.xpath("//*[@id='tasks']/div")).size() == tarefas.size())) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public int tarefaNaoAdicionada() {
+		
+		return driver.findElements(By.xpath("//*[@id='tasks']/div")).size();
+	}
+
+	public boolean validarQuatidadeTarefas(int arg1) {
+		return driver.findElements(By.xpath("//*[@id='tasks']/div")).size() == arg1;
+	}
+
+	public void removerTarefa(int arg1) {
+		List<WebElement> remover = driver.findElements(By.id("remove"));
+		for (int i = 0; i < arg1; i++) {
+			remover.get(remover.size() - i - 1).click();
+			tarefas.remove(remover.size() - i - 1);
+		}
+	}
+
+	public void concluirTarefa(int arg1) {
+		List<WebElement> concluir = driver.findElements(By.id("close-open"));
+		for (int i = 0; i < arg1; i++) {
+			concluir.get(concluir.size() - 1 - i).click();
+			tarefasConcluidas.add(tarefas.get(concluir.size()-1-i));
+		}
+	}
+
+	public boolean validarConcluidas() {
+		return driver.findElements(By.xpath("//*[contains(@class,'checked')]")).size() == tarefasConcluidas.size();
+	}
+
 }
