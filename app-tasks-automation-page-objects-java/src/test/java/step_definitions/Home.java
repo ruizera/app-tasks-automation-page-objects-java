@@ -3,10 +3,15 @@ package step_definitions;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.SQLException;
+
 import org.openqa.selenium.WebDriver;
 
+import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.it.Quando;
 import cucumber.api.java.pt.Entao;
+import support.DB_Connection;
 import support.WebDriverManager;
 import telas.HomePage;
 
@@ -16,23 +21,29 @@ public class Home {
 	WebDriver driver = wdm.getDriver();
 	HomePage hp = new HomePage(driver);
 	boolean validaStep = false;
+	DB_Connection dbc = new DB_Connection();
+	private String feature;
+	private String step;
+	private String esperado;
+	private String obtido;
+	
+	
 
 	@Quando("^eu adicionar (\\d+) tarefa valida$")
 	public void eu_adicionar_tarefa_valida(int arg1) throws Throwable {
 		hp.adicionarTarefa("Tarefa n", arg1);
-		System.out.println("testando");
+		
 	}
-	
 
 	@Entao("^as tarefas retornadas devem ser exibidas corretamente$")
 	public void as_tarefas_retornadas_devem_ser_exibidas_corretamente() throws Throwable {
 		validaStep = hp.validarTarefas();
 		assertTrue(validaStep);
+
 	}
 
 	@Quando("^eu adicionar (\\d+) tarefa inválida$")
 	public void eu_adicionar_tarefa_inválida(int arg1) throws Throwable {
-		System.out.println("OPA mEU CARO");
 		hp.adicionarTarefa("", arg1);
 	}
 
@@ -61,5 +72,10 @@ public class Home {
 	public void as_tarefas_marcadas_como_concluidas_devem_estar_corretas() throws Throwable {
 		validaStep = hp.validarConcluidas();
 		assertTrue(validaStep);
+	}
+	
+	@After
+	public void after(Scenario scenario) throws SQLException {
+		dbc.add(scenario.getName(),"", "", "", String.valueOf(scenario.getStatus()));
 	}
 }

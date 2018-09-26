@@ -53,6 +53,29 @@ public class ConfigFileReader {
 			throw new RuntimeException("Url não especificada");
 	}
 
+	public String getDBUrl() {
+		String url = properties.getProperty("DBURL");
+		if (url != null)
+			return url;
+		else
+			throw new RuntimeException("Url não especificada");
+	}
+	
+	public String getDBPassword() {
+		String password = properties.getProperty("DBPassword");
+		if (password != null)
+			return password;
+		else
+			throw new RuntimeException("Senha não especificada");
+	}
+	public String getDBUser() {
+		String user = properties.getProperty("DBUser");
+		if (user!= null)
+			return user;
+		else
+			throw new RuntimeException("Usuário não especificado");
+	}
+
 	public DriverType getBrowser() {
 		String browserName = properties.getProperty("browser");
 		if (browserName == null || browserName.equals("chrome"))
