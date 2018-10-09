@@ -17,7 +17,8 @@ public class HomePage {
 		this.driver = driver;
 	}
 
-	public int adicionarTarefa(String tarefa, int arg1) {
+	public void adicionarTarefa(String tarefa, int arg1) {
+		
 		String nomeTarefa = "";
 		for (int i = 1; i <= arg1; i++) {
 			nomeTarefa = tarefa.replace("n", String.valueOf(i));
@@ -25,7 +26,6 @@ public class HomePage {
 			driver.findElement(By.id("add")).click();
 			tarefas.add(nomeTarefa);
 		}
-		return tarefas.size();
 	}
 
 	public boolean validarTarefas() {
