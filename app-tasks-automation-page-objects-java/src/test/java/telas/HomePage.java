@@ -49,6 +49,9 @@ public class HomePage {
 	public void removerTarefa(int arg1) {
 		List<WebElement> remover = driver.findElements(By.id("remove"));
 		for (int i = 0; i < arg1; i++) {
+			if(remover.size() == 0) {
+				break;
+			}
 			remover.get(remover.size() - i - 1).click();
 			tarefas.remove(remover.size() - i - 1);
 		}
@@ -57,6 +60,9 @@ public class HomePage {
 	public void concluirTarefa(int arg1) {
 		List<WebElement> concluir = driver.findElements(By.id("close-open"));
 		for (int i = 0; i < arg1; i++) {
+			if(concluir.size() == 0) {
+				break;
+			}
 			concluir.get(concluir.size() - 1 - i).click();
 			tarefasConcluidas.add(tarefas.get(concluir.size()-1-i));
 		}
