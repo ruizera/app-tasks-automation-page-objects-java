@@ -12,13 +12,13 @@ public class HomePage {
 	private WebDriver driver;
 	private List<String> tarefas = new ArrayList<String>();
 	private List<String> tarefasConcluidas = new ArrayList<String>();
-	
+
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
 	}
 
 	public void adicionarTarefa(String tarefa, int arg1) {
-		
+
 		String nomeTarefa = "";
 		for (int i = 1; i <= arg1; i++) {
 			nomeTarefa = tarefa.replace("n", String.valueOf(i));
@@ -38,7 +38,7 @@ public class HomePage {
 	}
 
 	public int tarefaNaoAdicionada() {
-		
+
 		return driver.findElements(By.xpath("//*[@id='tasks']/div")).size();
 	}
 
@@ -47,9 +47,13 @@ public class HomePage {
 	}
 
 	public void removerTarefa(int arg1) {
+
 		List<WebElement> remover = driver.findElements(By.id("remove"));
+		if (arg1 == -1) {
+			arg1 = remover.size();
+		}
 		for (int i = 0; i < arg1; i++) {
-			if(remover.size() == 0) {
+			if (remover.size() == 0) {
 				break;
 			}
 			remover.get(remover.size() - i - 1).click();
@@ -60,11 +64,11 @@ public class HomePage {
 	public void concluirTarefa(int arg1) {
 		List<WebElement> concluir = driver.findElements(By.id("close-open"));
 		for (int i = 0; i < arg1; i++) {
-			if(concluir.size() == 0) {
+			if (concluir.size() == 0) {
 				break;
 			}
 			concluir.get(concluir.size() - 1 - i).click();
-			tarefasConcluidas.add(tarefas.get(concluir.size()-1-i));
+			tarefasConcluidas.add(tarefas.get(concluir.size() - 1 - i));
 		}
 	}
 
