@@ -5,8 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.openqa.selenium.WebDriver;
 
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.java.it.Quando;
 import cucumber.api.java.pt.Entao;
 import support.WebDriverManager;
@@ -24,10 +22,6 @@ public class Home {
 	private String esperado;
 	private String obtido;*/
 	
-	@Before
-	public void setUp() {
-		hp.removerTarefa(-1);
-	}
 
 	@Quando("^eu adicionar (\\d+) tarefa valida$")
 	public void eu_adicionar_tarefa_valida(int arg1) throws Throwable {
@@ -74,8 +68,4 @@ public class Home {
 		assertTrue(validaStep);
 	}
 	
-	@After
-	public void cleanUp() {
-		hp.removerTarefa(-1);
-	}
 }

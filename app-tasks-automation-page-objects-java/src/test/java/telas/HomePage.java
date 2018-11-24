@@ -49,15 +49,23 @@ public class HomePage {
 	public void removerTarefa(int arg1) {
 
 		List<WebElement> remover = driver.findElements(By.id("remove"));
+		boolean validacao = true;
+		
 		if (arg1 == -1) {
 			arg1 = remover.size();
+			System.out.println(remover.size());
+			validacao = false;
 		}
+		
 		for (int i = 0; i < arg1; i++) {
 			if (remover.size() == 0) {
 				break;
 			}
 			remover.get(remover.size() - i - 1).click();
-			tarefas.remove(remover.size() - i - 1);
+			if(validacao) {
+				tarefas.remove(remover.size() - i - 1);
+
+			}
 		}
 	}
 
