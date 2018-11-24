@@ -23,6 +23,7 @@ public class HomePage {
 		for (int i = 1; i <= arg1; i++) {
 			nomeTarefa = tarefa.replace("n", String.valueOf(i));
 			driver.findElement(By.xpath("//*[@type='text']")).sendKeys(nomeTarefa);
+			driver.findElement(By.id("data")).sendKeys("19/12/1995");
 			driver.findElement(By.id("add")).click();
 			tarefas.add(nomeTarefa);
 		}
