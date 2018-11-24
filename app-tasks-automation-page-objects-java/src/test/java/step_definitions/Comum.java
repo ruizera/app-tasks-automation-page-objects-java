@@ -18,7 +18,7 @@ public class Comum {
 	HomePage hp = new HomePage(driver);
 
 	@Before
-	public void setUp() {
+	public void setUp() throws InterruptedException {
 		driver.get(cfr.getApplicationUrl());
 		lp.logar(String.valueOf(cfr.getRa())).removerTarefa(-1);
 	}
