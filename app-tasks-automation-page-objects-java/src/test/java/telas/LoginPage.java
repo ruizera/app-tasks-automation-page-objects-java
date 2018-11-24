@@ -10,12 +10,17 @@ public class LoginPage {
 		this.driver = driver;
 	}
 
-	public HomePage logar(String ra) {
+	public HomePage logar(String ra) throws InterruptedException {
 
-		driver.findElement(By.xpath("//*[@placeholder='Digite seu RA']")).sendKeys("1513907");
+		driver.findElement(By.xpath("//*[@placeholder='Digite seu RA']")).sendKeys(ra);
 		driver.findElement(By.id("add")).click();
+		Thread.sleep(2000);
 		if (!driver.findElements(By.partialLinkText("login")).isEmpty()) {
 			driver.findElement(By.partialLinkText("login")).click();
+			Thread.sleep(1000);
+			driver.findElement(By.xpath("//*[@placeholder='Digite seu RA']")).sendKeys(ra);
+			driver.findElement(By.id("add")).click();
+			Thread.sleep(500);
 		}
 		return new HomePage(driver);
 	}
