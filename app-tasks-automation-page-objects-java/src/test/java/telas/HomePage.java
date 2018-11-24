@@ -1,6 +1,9 @@
 package telas;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -17,12 +20,16 @@ public class HomePage {
 		this.driver = driver;
 	}
 
-	public void adicionarTarefa(String tarefa, int arg1) {
+	public void adicionarTarefa(String tarefa, int arg1) throws ParseException {
 
 		String nomeTarefa = "";
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		Date data = formato.parse("24/11/2018");
+		String d = formato.format(data);
 		for (int i = 1; i <= arg1; i++) {
 			nomeTarefa = tarefa.replace("n", String.valueOf(i));
 			driver.findElement(By.xpath("//*[@type='text']")).sendKeys(nomeTarefa);
+			driver.findElement(By.xpath("//*[@type='date']")).sendKeys(d);
 			driver.findElement(By.id("add")).click();
 			tarefas.add(nomeTarefa);
 		}
